@@ -1,5 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { AuthService } from "../../services/auth.service";
+import { NotificationService } from "../../services/notification.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-navbar",
@@ -9,16 +11,19 @@ import { AuthService } from "../../services/auth.service";
 export class NavbarComponent implements OnInit {
   model: any = {};
 
-  constructor(private _authService: AuthService) {}
+  constructor(public _authService: AuthService, private _notificator: NotificationService, private _router: Router) {}
 
   ngOnInit() {}
 
   login() {
     this._authService.login(this.model).subscribe(
       next => {
-        console.log(true);
+        this._notificator.success("Logged in successfully");
       },
-      error => console.log
+      this._notificator.error,
+      () => {
+        this._router.navigate(["/members"]);
+      }
     );
   }
 
@@ -27,6 +32,7 @@ export class NavbarComponent implements OnInit {
   }
 
   logout() {
+    this._router.navigate(["/home"]);
     return this._authService.logout();
   }
 }
