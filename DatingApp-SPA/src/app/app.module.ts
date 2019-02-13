@@ -1,23 +1,40 @@
+// Modules
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
-
-import { BsDropdownModule } from "ngx-bootstrap";
-
-import { AppComponent } from "./app.component";
+import { BsDropdownModule, TabsModule } from "ngx-bootstrap";
 import { HttpClientModule } from "@angular/common/http";
-import { NavbarComponent } from "./components/navbar/navbar.component";
 import { FormsModule } from "@angular/forms";
-import { AuthService } from "./services/auth.service";
+import { RouterModule } from "@angular/router";
+import { JwtModule } from '@auth0/angular-jwt';
+
+// Components
+import { AppComponent } from "./app.component";
+import { NavbarComponent } from "./components/navbar/navbar.component";
 import { HomeComponent } from "./pages/home/home.component";
-import { RegisterComponent } from "./pages/register/register.component";
-import { ErrorInterceptorProvider } from "./interceptors/error.interceptor";
-import { NotificationService } from "./services/notification.service";
-import { MemberListComponent } from "./pages/member-list/member-list.component";
+import { MemberListComponent } from "./components/members/member-list/member-list.component";
 import { ListsComponent } from "./pages/lists/lists.component";
 import { MessagesComponent } from "./pages/messages/messages.component";
-import { RouterModule } from "@angular/router";
-import { appRoutes } from "./routes";
+import { RegisterComponent } from "./pages/register/register.component";
+import { MemberCardComponent } from './components/members/member-card/member-card.component';
+import { MemberDetailComponent } from './components/members/member-detail/member-detail.component';
+
+// Services
+import { AuthService } from "./services/auth.service";
+import { NotificationService } from "./services/notification.service";
+import { UserService } from "./services/user.service";
+
+// Guards
 import { AuthGuard } from "./guards/auth.guard";
+
+// Interceptors
+import { ErrorInterceptorProvider } from "./interceptors/error.interceptor";
+
+// Routes
+import { appRoutes } from "./routes";
+
+export function tokenGetter() {
+  return localStorage.getItem('token');
+}
 
 @NgModule({
   declarations: [
@@ -27,10 +44,25 @@ import { AuthGuard } from "./guards/auth.guard";
     RegisterComponent,
     MemberListComponent,
     ListsComponent,
-    MessagesComponent
+    MessagesComponent,
+    MemberCardComponent,
+    MemberDetailComponent
   ],
-  imports: [BrowserModule, HttpClientModule, FormsModule, BsDropdownModule.forRoot(), RouterModule.forRoot(appRoutes)],
-  providers: [AuthService, ErrorInterceptorProvider, NotificationService, AuthGuard],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    FormsModule,
+    BsDropdownModule.forRoot(),
+    TabsModule.forRoot(),
+    RouterModule.forRoot(appRoutes),
+    JwtModule.forRoot({
+      config: {
+        tokenGetter,
+        whitelistedDomains: ['localhost:5000'],
+        blacklistedRoutes: ['localhost:5000/api/auth']
+      }
+    })],
+  providers: [AuthService, ErrorInterceptorProvider, NotificationService, AuthGuard, UserService],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

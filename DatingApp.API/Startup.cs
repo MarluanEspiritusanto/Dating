@@ -41,11 +41,6 @@ namespace DatingApp.API
             .AddJsonOptions(options =>
             {
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-            })
-            .ConfigureApiBehaviorOptions(options =>
-            {
-                options
-                .SuppressUseValidationProblemDetailsForInvalidModelStateResponses = true;
             });
 
             services.AddCors();
