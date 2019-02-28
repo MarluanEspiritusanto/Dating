@@ -27,6 +27,7 @@ import { UserService } from './services/user.service';
 
 // Guards
 import { AuthGuard } from './guards/auth.guard';
+import { PreventUnsaveGuard } from './guards/prevent-unsave.guard';
 
 // Interceptors
 import { ErrorInterceptorProvider } from './interceptors/error.interceptor';
@@ -72,7 +73,7 @@ export function tokenGetter() {
       }
     })
   ],
-  providers: [AuthService, ErrorInterceptorProvider, NotificationService, AuthGuard, UserService, MemberDetailResolver, MemberListResolver, MemberEditResolver],
+  providers: [AuthService, ErrorInterceptorProvider, NotificationService, AuthGuard, UserService, MemberDetailResolver, MemberListResolver, MemberEditResolver, PreventUnsaveGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
