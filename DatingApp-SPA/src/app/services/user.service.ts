@@ -10,8 +10,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class UserService {
   baseUrl: string = environment.BASE_API_URL;
 
-
-  constructor(private _http: HttpClient) { }
+  constructor(private _http: HttpClient) {}
 
   public getUsers(): Observable<User[]> {
     return this._http.get<User[]>(this.baseUrl + '/users');
@@ -19,5 +18,9 @@ export class UserService {
 
   public getUser(id: number): Observable<User> {
     return this._http.get<User>(this.baseUrl + '/users/' + id);
+  }
+
+  public updateUser(id: number, user: User) {
+    return this._http.put(this.baseUrl + '/users/' + id, user);
   }
 }
