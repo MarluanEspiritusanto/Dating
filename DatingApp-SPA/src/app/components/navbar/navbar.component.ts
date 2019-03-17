@@ -9,11 +9,14 @@ import { Router } from "@angular/router";
   styleUrls: ["./navbar.component.css"]
 })
 export class NavbarComponent implements OnInit {
-  model: any = {};
+  public model: any = {};
+  public photoUrl: string;
 
   constructor(public _authService: AuthService, private _notificator: NotificationService, private _router: Router) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this._authService.currentPhotoUrl.subscribe(photoUrl => (this.photoUrl = photoUrl));
+  }
 
   login() {
     this._authService.login(this.model).subscribe(

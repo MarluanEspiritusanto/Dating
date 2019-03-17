@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
-import { Observable } from 'rxjs';
-import { User } from '../models/user.model';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from "@angular/core";
+import { environment } from "src/environments/environment";
+import { Observable } from "rxjs";
+import { User } from "../models/user.model";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class UserService {
   baseUrl: string = environment.BASE_API_URL;
@@ -13,14 +13,22 @@ export class UserService {
   constructor(private _http: HttpClient) {}
 
   public getUsers(): Observable<User[]> {
-    return this._http.get<User[]>(this.baseUrl + '/users');
+    return this._http.get<User[]>(this.baseUrl + "/users");
   }
 
   public getUser(id: number): Observable<User> {
-    return this._http.get<User>(this.baseUrl + '/users/' + id);
+    return this._http.get<User>(this.baseUrl + "/users/" + id);
   }
 
   public updateUser(id: number, user: User) {
-    return this._http.put(this.baseUrl + '/users/' + id, user);
+    return this._http.put(this.baseUrl + "/users/" + id, user);
+  }
+
+  public setMainPhoto(userId: number, photoId: number) {
+    return this._http.post(this.baseUrl + "/users/" + userId + "/photos/" + photoId + "/setMain", {});
+  }
+
+  public deletePhoto(userId: number, photoId: number) {
+    return this._http.delete(this.baseUrl + "/users/" + userId + "/photos/" + photoId);
   }
 }

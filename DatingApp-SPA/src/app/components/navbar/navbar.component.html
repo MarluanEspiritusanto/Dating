@@ -14,7 +14,12 @@
     </ul>
 
     <div *ngIf="isLoggedIn()" class="dropdown" dropdown>
-      <a class="dropdown-toggle text-light" dropdownToggle> Welcome {{ _authService.decodedToken?.unique_name | titlecase }} </a>
+      <span class="mr-1">
+        <img [src]="photoUrl" alt="" />
+      </span>
+      <a class="dropdown-toggle text-light" dropdownToggle>
+        Welcome {{ _authService.decodedToken?.unique_name | titlecase }}
+      </a>
 
       <div class="dropdown-menu mt-3" *dropdownMenu>
         <a class="dropdown-item" [routerLink]="['/member/edit']"><i class="fa fa-user"></i> Edit profile</a>
@@ -24,8 +29,22 @@
     </div>
 
     <form *ngIf="!isLoggedIn()" #loginForm="ngForm" (ngSubmit)="login()" class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="text" placeholder="Username" name="username" required [(ngModel)]="model.username" />
-      <input class="form-control mr-sm-2" type="password" placeholder="Password" required name="password" [(ngModel)]="model.password" />
+      <input
+        class="form-control mr-sm-2"
+        type="text"
+        placeholder="Username"
+        name="username"
+        required
+        [(ngModel)]="model.username"
+      />
+      <input
+        class="form-control mr-sm-2"
+        type="password"
+        placeholder="Password"
+        required
+        name="password"
+        [(ngModel)]="model.password"
+      />
       <button [disabled]="!loginForm.valid" class="btn btn-success my-2 my-sm-0" type="submit">Login</button>
     </form>
   </div>
