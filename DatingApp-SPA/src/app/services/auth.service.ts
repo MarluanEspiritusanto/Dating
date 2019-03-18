@@ -20,6 +20,7 @@ export class AuthService {
   constructor(private _http: HttpClient) {}
 
   login(model: any) {
+    debugger;
     return this._http.post(this.baseUrl + "/auth/login", model).pipe(
       map((response: any) => {
         const user = response;
@@ -34,8 +35,8 @@ export class AuthService {
     );
   }
 
-  register(model: any) {
-    return this._http.post(this.baseUrl + "/auth/register", model);
+  register(user: User) {
+    return this._http.post(this.baseUrl + "/auth/register", user);
   }
 
   isLoggedIn() {
