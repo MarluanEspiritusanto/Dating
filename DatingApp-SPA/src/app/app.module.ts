@@ -1,7 +1,7 @@
 // Modules
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
-import { BsDropdownModule, TabsModule, BsDatepickerModule } from "ngx-bootstrap";
+import { BsDropdownModule, TabsModule, BsDatepickerModule, PaginationModule, ButtonsModule } from "ngx-bootstrap";
 import { HttpClientModule } from "@angular/common/http";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
@@ -42,6 +42,9 @@ import { MemberDetailResolver } from "./resolvers/member-detail.resolver";
 import { MemberListResolver } from "./resolvers/member-list.resolver";
 import { MemberEditResolver } from "./resolvers/member-edit.resolver";
 
+// Pipes
+import { TimeAgoPipe } from "time-ago-pipe";
+
 export function tokenGetter() {
   return localStorage.getItem("token");
 }
@@ -58,7 +61,8 @@ export function tokenGetter() {
     MemberCardComponent,
     MemberDetailComponent,
     MemberEditComponent,
-    PhotoEditorComponent
+    PhotoEditorComponent,
+    TimeAgoPipe
   ],
   imports: [
     BrowserModule,
@@ -66,6 +70,8 @@ export function tokenGetter() {
     FormsModule,
     ReactiveFormsModule,
     FileUploadModule,
+    ButtonsModule.forRoot(),
+    PaginationModule.forRoot(),
     BsDropdownModule.forRoot(),
     BsDatepickerModule.forRoot(),
     TabsModule.forRoot(),
