@@ -22,6 +22,10 @@ export class ErrorInterceptor implements HttpInterceptor {
             return throwError(error.statusText);
           }
 
+          if (error.status === 400) {
+            return throwError(error.error);
+          }
+
           const applicationError = error.headers.get("Application-Error");
           if (applicationError) {
             console.error(applicationError);
@@ -31,6 +35,7 @@ export class ErrorInterceptor implements HttpInterceptor {
           const serverError = error.error.errors;
           let modalStateErrors = "";
           if (serverError && typeof serverError === "object") {
+            debugger;
             for (const key in serverError) {
               if (serverError[key]) {
                 modalStateErrors += serverError[key] + "\n";

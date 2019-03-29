@@ -41,6 +41,7 @@ import { appRoutes } from "./routes";
 import { MemberDetailResolver } from "./resolvers/member-detail.resolver";
 import { MemberListResolver } from "./resolvers/member-list.resolver";
 import { MemberEditResolver } from "./resolvers/member-edit.resolver";
+import { ListResolver } from "./resolvers/list.resolver";
 
 // Pipes
 import { TimeAgoPipe } from "time-ago-pipe";
@@ -94,6 +95,7 @@ export function tokenGetter() {
     MemberDetailResolver,
     MemberListResolver,
     MemberEditResolver,
+    ListResolver,
     PreventUnsaveGuard
   ],
   bootstrap: [AppComponent]
